@@ -66,38 +66,5 @@ namespace rpc_server
             if (n == 0 || n == 1) return n;
             return fib(n - 1) + fib(n - 2);
         }
-
-        static void TcpServer()
-        {
-            try
-            {
-                IPAddress ipaddress = IPAddress.Parse("127.0.0.1");
-                int portNumber = 5000;
-                TcpListener mylist = new TcpListener(ipaddress, portNumber);
-                mylist.Start();
-                Console.WriteLine("Server is Running on Port: " + portNumber);
-                Console.WriteLine("Local endpoint:" + mylist.LocalEndpoint);
-                Console.WriteLine("Waiting for Connections...");
-                Socket s = mylist.AcceptSocket();
-                Console.WriteLine("Connection Accepted From:" + s.RemoteEndPoint);
-                byte[] b = new byte[100];
-                int k = s.Receive(b);
-                Console.WriteLine("Recieved..");
-                for (int i = 0; i < k; i++)
-                {
-                    Console.Write(Convert.ToChar(b[i]));
-                }
-                ASCIIEncoding asencd = new ASCIIEncoding();
-                s.Send(asencd.GetBytes("Automatic Message:" + "String Received byte server !"));
-                Console.WriteLine("\nAutomatic Message is Sent");
-                s.Close();
-                mylist.Stop();
-                Console.ReadLine();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error.." + ex.StackTrace);
-            }
-        }
     }
-}pro
+}
